@@ -21,4 +21,4 @@ def check_user_and_password():
         login_form()
         if "password_correct" in st.session_state:
             st.error("😒 Password Incorrect")
-            st.stop()
+        st.stop()
