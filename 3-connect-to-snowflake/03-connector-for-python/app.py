@@ -2,18 +2,17 @@ import os
 import snowflake.connector
 
 conn = snowflake.connector.connect(
-    account='hdb90888',
-    user='cristiscu',
-    password=os.environ['SNOWSQL_PWD'],
-    database='TESTS',
-    schema='PUBLIC',
-    role='ACCOUNTADMIN',
-    warehouse='COMPUTE_WH'
-)
+    user="michal.mottl@COMCOM.GOVT.NZ",
+    account = "comcomdataplatform.australia-east.azure",
+    role="GRP_AZURE_DA_NONPROD_RPS_DEVELOPER",
+    warehouse="DATAANALYTICS_WH_DEV",
+    database="DATAANALYTICS_DB_DEV",
+    schema= "RPS_OUTPUT",
+    authenticator='externalbrowser')
 
 # (1) fetching row by row
 cur = conn.cursor()
-cur.execute('select * from tests.public.employees')
+cur.execute('select * from DATAANALYTICS_DB_DEV.DBT_MICHALM.aggregate_total_quarterly_system_transactions Limit 10;')
 for row in cur: print(row)
 
 # (2) getting the whole set
