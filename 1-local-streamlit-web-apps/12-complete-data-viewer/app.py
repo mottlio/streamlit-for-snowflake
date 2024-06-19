@@ -1,4 +1,4 @@
-import json
+import json, uuid
 import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
@@ -8,13 +8,20 @@ import modules.formats as formats
 import modules.charts as charts
 import modules.animated as animated
 import modules.utils as utils
+import modules.auth as auth
 
 st.set_page_config(layout="wide")
 st.title("Hierarchical Data Viewer")
 st.caption("Display your hierarchical data with charts and graphs.")
+auth.check_user_and_password()
+
+def getSessionId():
+    if "session_id" not in st.session_state:
+        st.session_state["session_id"] = str(uuid.uuid4())
+    return st.session_state["session_id"]
 
 @st.cache_data(show_spinner="Loading the CSV file...")
-def loadFile(filename):
+def loadFile(session_id, filename):
     return pd.read_csv(filename).convert_dtypes()
 
 with st.sidebar:
@@ -25,7 +32,7 @@ with st.sidebar:
     if uploaded_file is not None:
         filename = StringIO(uploaded_file.getvalue().decode("utf-8"))
 
-    df_orig = loadFile(filename)
+    df_orig = loadFile(getSessionId(), filename)
     cols = list(df_orig.columns)
 
     child = st.selectbox("Child Column Name", cols, index=0)

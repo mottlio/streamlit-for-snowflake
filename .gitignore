@@ -15,3 +15,5 @@ venv/
 **/yolov
 **/TRAIN_DATASET.CSV
 **/.streamlit/secrets.toml
+**/.streamlit/
+**/secrets.toml
