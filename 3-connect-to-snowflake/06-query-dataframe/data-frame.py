@@ -3,7 +3,7 @@ import _utils;
 session = _utils.getSession()
 
 avgSales = (session
-  .table("EMPLOYEES")
+  .table("DEMO_EMPLOYEES")
   .select("DEPARTMENT", "SALARY")
   .group_by("DEPARTMENT")
   .agg({ "SALARY": "avg" })
@@ -13,7 +13,7 @@ avgSales = (session
 #avgSales.show()
 
 managers = (session
-  .table("EMPLOYEES")
+  .table("DEMO_EMPLOYEES")
   .select("DEPARTMENT", "EMPLOYEE_NAME", "SALARY")
   .filter(col("JOB") == 'MANAGER')
   .sort("DEPARTMENT", "EMPLOYEE_NAME"))
